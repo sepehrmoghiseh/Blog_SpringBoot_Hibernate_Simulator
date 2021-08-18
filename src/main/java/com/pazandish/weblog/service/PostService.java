@@ -7,11 +7,11 @@ import com.pazandish.weblog.domain.WhoLikesEntity;
 import com.pazandish.weblog.domain.enumeration.Role;
 import com.pazandish.weblog.repository.UsersRepository;
 import com.pazandish.weblog.repository.WhoLikesRepository;
-import org.apache.tomcat.jni.User;
 import org.springframework.stereotype.Service;
 import com.pazandish.weblog.repository.PostRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -79,5 +79,30 @@ public class PostService {
             ids.add(postEntities.get(i).getId());
         }
         return ids;
+    }
+
+    public long postCount(String userName){
+        if(usersRepository.findByUserName(userName).isPresent()){
+            UsersEntity usersEntity=usersRepository.findByUserName(userName).get();
+            return postRepository.countAllByUser(usersEntity);
+        }
+        return 0;
+    }
+
+    public HashMap<Integer,String> searchByTitle(String title){
+        List<PostEntity>postEntityList=postRepository.findByTitleContainingIgnoreCase(title);
+        HashMap<Integer, String> searched=new HashMap<>();
+        for (int i = 0; i <postEntityList.size() ; i++) {
+            searched.put(i,postEntityList.get(i).getTitle()+": "+postEntityList.get(i).getContent());
+        }
+        return searched;
+    }
+    public HashMap<Integer,String> order(){
+        List<PostEntity>postEntityList=postRepository.findAllByOrderBySendDateDesc();
+        HashMap<Integer, String> searched=new HashMap<>();
+        for (int i = 0; i <postEntityList.size() ; i++) {
+            searched.put(i,postEntityList.get(i).getSendDate()+" _ "+postEntityList.get(i).getTitle()+": "+postEntityList.get(i).getContent());
+        }
+        return searched;
     }
 }

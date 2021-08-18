@@ -24,6 +24,8 @@ public interface PostRepository extends JpaRepository<PostEntity, Integer> {
     int setLike(@Param("newLike") int newLike, @Param("id2") int id2);
 
     List<PostEntity> findByUser(UsersEntity user);
+    long countAllByUser(UsersEntity usersEntity);
 
-
+    List<PostEntity> findByTitleContainingIgnoreCase(String title);
+    List<PostEntity> findAllByOrderBySendDateDesc();
 }

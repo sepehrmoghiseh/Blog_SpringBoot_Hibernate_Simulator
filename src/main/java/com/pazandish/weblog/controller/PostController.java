@@ -1,11 +1,11 @@
 package com.pazandish.weblog.controller;
 
 import com.pazandish.weblog.domain.PostEntity;
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import com.pazandish.weblog.service.PostService;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -38,4 +38,17 @@ public class PostController {
        return postService.findPost(userName);
     }
 
+    @GetMapping("/{userName}/count")
+    public long postCount(@PathVariable String userName){
+        return postService.postCount(userName);
+    }
+
+    @GetMapping("/searchtitle/{title}")
+    public HashMap<Integer, String> searchByTitle(@PathVariable String title){
+        return postService.searchByTitle(title);
+    }
+    @GetMapping("/orderbydate")
+    public HashMap<Integer, String> order(){
+        return postService.order();
+    }
 }

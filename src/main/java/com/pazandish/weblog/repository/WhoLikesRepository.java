@@ -20,4 +20,6 @@ public interface WhoLikesRepository extends JpaRepository<WhoLikesEntity, Intege
 
     @Transactional
     void deleteByUserAndPost(UsersEntity usersEntity,PostEntity postEntity);
+
+
 }
