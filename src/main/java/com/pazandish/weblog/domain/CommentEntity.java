@@ -12,9 +12,9 @@ public class CommentEntity {
     @Column(name = "id")
     private Integer id;
     @Column(name = "content", nullable = false)
-    private String Content;
+    private String content;
     @ManyToOne
-    @JoinColumn(name = "userName", nullable = false)
+    @JoinColumn(name = "user", nullable = false)
     private UsersEntity user;
     @ManyToOne
     @JoinColumn(name = "post", nullable = false)
@@ -36,32 +36,15 @@ public class CommentEntity {
         this.post = post;
     }
 
-
-    public UsersEntity getUsers() {
-        return user;
-    }
-
-    public void setUsers(UsersEntity user) {
-        this.user = user;
-    }
-
-    public PostEntity getPostEntity() {
-        return post;
-    }
-
-    public void setPostEntity(PostEntity postEntity) {
-        this.post = postEntity;
-    }
-
     public Integer getId() {
         return id;
     }
 
     public String getContent() {
-        return Content;
+        return content;
     }
 
     public void setContent(String content) {
-        Content = content;
+        this.content = content;
     }
 }

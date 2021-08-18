@@ -21,12 +21,12 @@ public class WhoLikesService {
 
     public void likeAction(WhoLikesEntity whoLikesEntity) {
         WhoLikesEntity whoLikesEntity1 = new WhoLikesEntity();
-        if (usersRepository.findByUserName(whoLikesEntity.getUser().getUserName()).get().isBlocked() == false &&
+        System.out.println(usersRepository.findByUserName(whoLikesEntity.getUser().getUserName()).get().getFirstName()+"ddd");
+
+        if (!usersRepository.findByUserName(whoLikesEntity.getUser().getUserName()).get().isBlocked() &&
                 whoLikesRepository.findByPostAndUser(postRepository.findById(whoLikesEntity.getPost().getId()).get(), usersRepository.findByUserName(whoLikesEntity.getUser().getUserName()).get()).isEmpty()) {
             whoLikesEntity1.setUser(usersRepository.findByUserName(whoLikesEntity.getUser().getUserName()).get());
             whoLikesEntity1.setPost(postRepository.findById(whoLikesEntity.getPost().getId()).get());
-            System.out.println(postRepository.findById(whoLikesEntity.getPost().getId()).get().getWhoLikesEntityList());
-
             whoLikesRepository.save(whoLikesEntity1);
         }
         postRepository.setLike(postRepository.findById(whoLikesEntity.getPost().getId()).get().getWhoLikesEntityList().size(), postRepository.findById(whoLikesEntity.getPost().getId()).get().getId());
